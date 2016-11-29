@@ -5,6 +5,8 @@
  */
 package zinsrechner;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import javafx.application.Application;
 import static javafx.beans.property.IntegerProperty.integerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -56,7 +58,7 @@ public class Zinsrechner extends Application {
         grid.add(euro, 2, 1);
         
         Label output = new Label();
-        grid.add(output, 0, 3);
+        grid.add(output, 0, 4);
         output.setVisible(false);
         
         Label error = new Label();
@@ -65,22 +67,47 @@ public class Zinsrechner extends Application {
         grid.add(error, 3, 1);
         error.setVisible(false);
         
-        Label percent = new Label("Zinssatz");
+        Label percent = new Label("Zinssatz:");
         percent.setFont(new Font("Arial", 14));
         grid.add(percent, 0, 2);
         
         TextField percentInput = new TextField();
         grid.add(percentInput, 1, 2);
         
+        Label percent1 = new Label("%");
+        percent1.setFont(new Font("Arial", 14));
+        grid.add(percent1, 2, 2);
+        
+        Label time = new Label("Laufzeit");
+        time.setFont(new Font("Arial", 14));
+        grid.add(time, 0, 3);
+        
+        TextField timeInput = new TextField();
+        grid.add(timeInput, 1, 3);
+        
+        Label years = new Label("Jahre:");
+        years.setFont(new Font("Arial", 14));
+        grid.add(years, 2, 3);
+        
         Button submit = new Button("Bestätigen");
-        grid.add(submit, 0, 4);
+        grid.add(submit, 0, 5);
         submit.setOnAction(new EventHandler<ActionEvent>(){
             @Override public void handle(ActionEvent e) {
                 error.setVisible(false);
                 output.setVisible(false);
-                if(startingInput.getText().matches("\\d*")){
-                int x = Integer.parseInt(startingInput.getText());
-                output.textProperty().bind(new SimpleIntegerProperty(x).asString());
+                if(startingInput.getText().matches("\\d*") && percentInput.getText().matches("\\d*")  && timeInput.getText().matches("\\d*")){
+                double k = Double.valueOf(startingInput.getText());
+                double zinssatz = Double.valueOf(percentInput.getText());
+                zinssatz = (zinssatz / 100) + 1;
+                int n = Integer.parseInt(timeInput.getText());
+                
+                for (int i = 0; i < n; i++) {
+                    k = k * zinssatz;
+                }
+                k = round(k, 2);
+                String erg = Double.toString(k);
+                
+                output.setText(erg);
                 output.setVisible(true);
                 } else {
                     error.setVisible(true);
@@ -92,6 +119,15 @@ public class Zinsrechner extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+    
+    public static double round(double value, int places) {
+    if (places < 0) throw new IllegalArgumentException();
+
+    BigDecimal bd = new BigDecimal(value);
+    bd = bd.setScale(places, RoundingMode.HALF_UP);
+    return bd.doubleValue();
+    }
+
 
     /**
      * @param args the command line arguments
