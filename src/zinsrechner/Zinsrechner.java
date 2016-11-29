@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -55,19 +56,32 @@ public class Zinsrechner extends Application {
         
         Label ausgabe = new Label();
         grid.add(ausgabe, 0, 3);
+        ausgabe.setVisible(false);
+        
+        Label fehler = new Label();
+        fehler.setText("Nur Zahlen erlaubt!");
+        fehler.setTextFill(Color.FIREBRICK);
+        grid.add(fehler, 3, 1);
+        fehler.setVisible(false);
+        
         
         Button submit = new Button("Bestätigen");
         grid.add(submit, 0, 2);
         submit.setOnAction(new EventHandler<ActionEvent>(){
             @Override public void handle(ActionEvent e) {
-                
+                fehler.setVisible(false);
+                ausgabe.setVisible(false);
+                if(kapitaleingabe.getText().matches("\\d*")){
                 int x = Integer.parseInt(kapitaleingabe.getText());
                 ausgabe.textProperty().bind(new SimpleIntegerProperty(x).asString());
-                
+                ausgabe.setVisible(true);
+                } else {
+                    fehler.setVisible(true);
+                }
             }
         });
         
-        Scene scene = new Scene(grid, 400, 250);
+        Scene scene = new Scene(grid, 500, 250);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
