@@ -32,6 +32,7 @@ public class Zinsrechner extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Zinsrechner");
+        primaryStage.setResizable(false);
         
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_LEFT);
@@ -39,44 +40,50 @@ public class Zinsrechner extends Application {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        Text text1 = new Text ("Zinsrechner");
-        text1.setFont(new Font("Arial", 30));
-        grid.add(text1, 0, 0, 2, 1);
+        Text heading = new Text ("Zinsrechner");
+        heading.setFont(new Font("Arial", 30));
+        grid.add(heading, 0, 0, 2, 1);
         
-        Label startkapital = new Label("Startkapital:");
-        startkapital.setFont(new Font("Arial", 14));
-        grid.add(startkapital, 0, 1);
+        Label starting = new Label("Startkapital:");
+        starting.setFont(new Font("Arial", 14));
+        grid.add(starting, 0, 1);
         
-        TextField kapitaleingabe = new TextField();
-        grid.add(kapitaleingabe, 1, 1);
+        TextField startingInput = new TextField();
+        grid.add(startingInput, 1, 1);
         
         Label euro = new Label("€");
         euro.setFont(new Font("Arial", 14));
         grid.add(euro, 2, 1);
         
-        Label ausgabe = new Label();
-        grid.add(ausgabe, 0, 3);
-        ausgabe.setVisible(false);
+        Label output = new Label();
+        grid.add(output, 0, 3);
+        output.setVisible(false);
         
-        Label fehler = new Label();
-        fehler.setText("Nur Zahlen erlaubt!");
-        fehler.setTextFill(Color.FIREBRICK);
-        grid.add(fehler, 3, 1);
-        fehler.setVisible(false);
+        Label error = new Label();
+        error.setText("Nur Zahlen erlaubt!");
+        error.setTextFill(Color.FIREBRICK);
+        grid.add(error, 3, 1);
+        error.setVisible(false);
         
+        Label percent = new Label("Zinssatz");
+        percent.setFont(new Font("Arial", 14));
+        grid.add(percent, 0, 2);
+        
+        TextField percentInput = new TextField();
+        grid.add(percentInput, 1, 2);
         
         Button submit = new Button("Bestätigen");
-        grid.add(submit, 0, 2);
+        grid.add(submit, 0, 4);
         submit.setOnAction(new EventHandler<ActionEvent>(){
             @Override public void handle(ActionEvent e) {
-                fehler.setVisible(false);
-                ausgabe.setVisible(false);
-                if(kapitaleingabe.getText().matches("\\d*")){
-                int x = Integer.parseInt(kapitaleingabe.getText());
-                ausgabe.textProperty().bind(new SimpleIntegerProperty(x).asString());
-                ausgabe.setVisible(true);
+                error.setVisible(false);
+                output.setVisible(false);
+                if(startingInput.getText().matches("\\d*")){
+                int x = Integer.parseInt(startingInput.getText());
+                output.textProperty().bind(new SimpleIntegerProperty(x).asString());
+                output.setVisible(true);
                 } else {
-                    fehler.setVisible(true);
+                    error.setVisible(true);
                 }
             }
         });
