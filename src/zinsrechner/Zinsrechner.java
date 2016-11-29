@@ -60,10 +60,10 @@ public class Zinsrechner extends Application {
         grid.add(submit, 0, 2);
         submit.setOnAction(new EventHandler<ActionEvent>(){
             @Override public void handle(ActionEvent e) {
-                if () {
+                
                 int x = Integer.parseInt(kapitaleingabe.getText());
                 ausgabe.textProperty().bind(new SimpleIntegerProperty(x).asString());
-                }
+                
             }
         });
         
