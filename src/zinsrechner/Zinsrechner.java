@@ -8,8 +8,6 @@ package zinsrechner;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import javafx.application.Application;
-import static javafx.beans.property.IntegerProperty.integerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -19,7 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -41,7 +38,6 @@ public class Zinsrechner extends Application {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.setGridLinesVisible(true);
         
         Text heading = new Text ("Zinsrechner");
         heading.setFont(new Font("Arial", 30));
