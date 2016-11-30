@@ -40,7 +40,8 @@ public class Zinsrechner extends Application {
         grid.setAlignment(Pos.TOP_LEFT);
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setGridLinesVisible(true);
         
         Text heading = new Text ("Zinsrechner");
         heading.setFont(new Font("Arial", 30));
@@ -120,6 +121,8 @@ public class Zinsrechner extends Application {
         primaryStage.show();
     }
     
+    
+    //method for rounding the results
     public static double round(double value, int places) {
     if (places < 0) throw new IllegalArgumentException();
 
